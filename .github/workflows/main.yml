@@ -32,10 +32,17 @@ jobs:
           python -m pip install --upgrade "pip<25"
           pip install buildozer cython==0.29.36
 
+      - name: Pin python-for-android
+        run: |
+          git clone --depth 1 --branch v2024.01.21 \
+            https://github.com/kivy/python-for-android.git p4a
+          echo "P4A_DIR=$GITHUB_WORKSPACE/p4a" >> "$GITHUB_ENV"
+
       - name: Build APK
         env:
           PIP_VERSION: 24.3.1
         run: |
+          export BUILDOZER_ANDROID_P4A_DIR="$P4A_DIR"
           yes | buildozer android debug
 
       - name: Upload APK
