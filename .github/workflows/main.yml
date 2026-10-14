@@ -15,35 +15,40 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: "17"
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y \
             git zip unzip autoconf libtool pkg-config \
             zlib1g-dev libncurses5-dev libncursesw5-dev \
-            cmake libffi-dev libssl-dev
-          python -m pip install --upgrade "pip<25"
-          pip install buildozer cython==0.29.36
+            cmake libffi-dev libssl-dev \
+            libltdl-dev libsqlite3-dev \
+            libbz2-dev libreadline-dev \
+            libgdbm-dev libgdbm-compat-dev \
+            liblzma-dev
 
-      - name: Pin python-for-android
+      - name: Install Buildozer
         run: |
-          git clone --depth 1 --branch v2024.01.21 \
-            https://github.com/kivy/python-for-android.git p4a
-          echo "P4A_DIR=$GITHUB_WORKSPACE/p4a" >> "$GITHUB_ENV"
+          python -m pip install --upgrade "pip<25"
+          python -m pip install buildozer cython==0.29.36
+
+      - name: Clear previous build files
+        run: |
+          rm -rf .buildozer
+          rm -rf bin
 
       - name: Build APK
         env:
-          PIP_VERSION: 24.3.1
+          PIP_VERSION: "24.3.1"
         run: |
-          export BUILDOZER_ANDROID_P4A_DIR="$P4A_DIR"
-          yes | buildozer android debug
+          yes | buildozer -v android debug
 
       - name: Upload APK
         if: success()
