@@ -6,7 +6,7 @@ source.dir = .
 source.include_exts = py,txt,png,jpg,jpeg,kv
 version = 1.0
 
-requirements = python3,kivy==2.3.1,requests,beautifulsoup4
+requirements = python3,kivy==2.3.1,requests,beautifulsoup4,plyer
 
 orientation = portrait
 fullscreen = 0
