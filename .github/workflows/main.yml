@@ -48,7 +48,7 @@ jobs:
         env:
           PIP_VERSION: "24.3.1"
         run: |
-          yes | buildozer -v android debug
+          buildozer -v android debug
 
       - name: Upload APK
         if: success()
