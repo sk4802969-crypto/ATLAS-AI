@@ -25,17 +25,23 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y git zip unzip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev
-          python -m pip install --upgrade pip
+          sudo apt-get install -y \
+            git zip unzip autoconf libtool pkg-config \
+            zlib1g-dev libncurses5-dev libncursesw5-dev \
+            cmake libffi-dev libssl-dev
+          python -m pip install --upgrade "pip<25"
           pip install buildozer cython==0.29.36
 
       - name: Build APK
+        env:
+          PIP_VERSION: 24.3.1
         run: |
-          export PIP_VERSION=24.3.1
           yes | buildozer android debug
 
       - name: Upload APK
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: ATLAS-AI-APK
           path: bin/*.apk
+          if-no-files-found: error
