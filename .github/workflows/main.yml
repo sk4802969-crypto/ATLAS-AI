@@ -22,6 +22,11 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Install Android SDK Build Tools
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+
       - name: Install system dependencies
         run: |
           sudo apt-get update
