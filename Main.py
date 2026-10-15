@@ -24,6 +24,7 @@ class AtlasFace(Widget):
 
     def draw_face(self, *args):
         self.canvas.clear()
+
         with self.canvas:
             Color(0.02, 0.05, 0.12, 1)
             Ellipse(pos=self.pos, size=self.size)
@@ -32,25 +33,56 @@ class AtlasFace(Widget):
             x, y = self.x, self.y
 
             Color(0.0, 0.85, 1.0, 1)
-            Line(circle=(x + w / 2, y + h * 0.55, min(w, h) * 0.31), width=2)
+            Line(
+                circle=(
+                    x + w / 2,
+                    y + h * 0.55,
+                    min(w, h) * 0.31
+                ),
+                width=2
+            )
 
             Color(0.1, 0.8, 1, 1)
-            Ellipse(pos=(x + w * 0.30, y + h * 0.59), size=(w * 0.12, h * 0.07))
-            Ellipse(pos=(x + w * 0.58, y + h * 0.59), size=(w * 0.12, h * 0.07))
+            Ellipse(
+                pos=(x + w * 0.30, y + h * 0.59),
+                size=(w * 0.12, h * 0.07)
+            )
+            Ellipse(
+                pos=(x + w * 0.58, y + h * 0.59),
+                size=(w * 0.12, h * 0.07)
+            )
 
             Color(0.2, 0.95, 1, 1)
-            mouth_h = h * (0.025 + 0.045 * self.phase if self.talking else 0.02)
-            Line(rectangle=(x + w * 0.38, y + h * 0.39, w * 0.24, mouth_h), width=2)
+            mouth_h = h * (
+                0.025 + 0.045 * self.phase
+                if self.talking else 0.02
+            )
+
+            Line(
+                rectangle=(
+                    x + w * 0.38,
+                    y + h * 0.39,
+                    w * 0.24,
+                    mouth_h
+                ),
+                width=2
+            )
 
 
 class AtlasApp(App):
     def build(self):
         self.title = "ATLAS AI"
-        root = BoxLayout(orientation="vertical", padding=16, spacing=10)
+
+        root = BoxLayout(
+            orientation="vertical",
+            padding=16,
+            spacing=10
+        )
 
         root.add_widget(Label(
             text="[b]ATLAS AI[/b]\nYour personal AI assistant",
-            markup=True, size_hint_y=0.13
+            markup=True,
+            size_hint_y=0.13
         ))
 
         self.face = AtlasFace(size_hint_y=0.43)
@@ -64,11 +96,15 @@ class AtlasApp(App):
 
         self.question = TextInput(
             hint_text="Type your question here...",
-            multiline=False, size_hint_y=0.12
+            multiline=False,
+            size_hint_y=0.12
         )
         root.add_widget(self.question)
 
-        buttons = BoxLayout(size_hint_y=0.13, spacing=8)
+        buttons = BoxLayout(
+            size_hint_y=0.13,
+            spacing=8
+        )
 
         ask = Button(text="Ask ATLAS")
         ask.bind(on_press=self.ask_atlas)
@@ -106,9 +142,12 @@ class AtlasApp(App):
 
         try:
             from plyer import tts
+
             self.face.talking = True
             tts.speak("Hello Boss. I am Atlas.")
+
             Clock.schedule_once(self.stop_talking, 2)
+
         except Exception:
             self.status.text = "Voice support needs Android setup."
             self.face.talking = False
