@@ -1,2 +1,7 @@
 __pycache__/
 *.bak
+
+# Private/local files
+private.tar
+Main.py.web-backup
+main.py.backup

@@ -161,12 +161,22 @@ if __name__ == "__main__":
     import traceback
     from pathlib import Path
 
+    app = AtlasApp()
     try:
-        AtlasApp().run()
+        app.run()
     except BaseException:
-        error_path = Path("atlas_startup_error.txt")
+        error_text = traceback.format_exc()
         try:
-            error_path.write_text(traceback.format_exc())
+            error_dir = Path(app.user_data_dir)
+            error_dir.mkdir(parents=True, exist_ok=True)
+            (error_dir / "atlas_startup_error.txt").write_text(
+                error_text, encoding="utf-8"
+            )
         except Exception:
-            pass
+            try:
+                Path("atlas_startup_error.txt").write_text(
+                    error_text, encoding="utf-8"
+                )
+            except Exception:
+                pass
         raise
