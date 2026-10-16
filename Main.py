@@ -13,6 +13,7 @@ class AtlasFace(Widget):
         super().__init__(**kwargs)
         self.talking = False
         self.phase = 0
+
         Clock.schedule_interval(self.animate, 0.18)
         self.bind(pos=self.draw_face, size=self.draw_face)
         self.draw_face()
@@ -34,11 +35,7 @@ class AtlasFace(Widget):
 
             Color(0.0, 0.85, 1.0, 1)
             Line(
-                circle=(
-                    x + w / 2,
-                    y + h * 0.55,
-                    min(w, h) * 0.31
-                ),
+                circle=(x + w / 2, y + h * 0.55, min(w, h) * 0.31),
                 width=2
             )
 
@@ -53,6 +50,7 @@ class AtlasFace(Widget):
             )
 
             Color(0.2, 0.95, 1, 1)
+
             mouth_h = h * (
                 0.025 + 0.045 * self.phase
                 if self.talking else 0.02
@@ -79,11 +77,12 @@ class AtlasApp(App):
             spacing=10
         )
 
-        root.add_widget(Label(
+        title = Label(
             text="[b]ATLAS AI[/b]\nYour personal AI assistant",
             markup=True,
             size_hint_y=0.13
-        ))
+        )
+        root.add_widget(title)
 
         self.face = AtlasFace(size_hint_y=0.43)
         root.add_widget(self.face)
@@ -132,6 +131,7 @@ class AtlasApp(App):
             return
 
         self.status.text = "ATLAS received your question."
+
         self.answer.text = (
             "I received: " + text +
             "\nAI brain connection will be added next."
@@ -158,4 +158,15 @@ class AtlasApp(App):
 
 
 if __name__ == "__main__":
-    AtlasApp().run()
+    import traceback
+    from pathlib import Path
+
+    try:
+        AtlasApp().run()
+    except BaseException:
+        error_path = Path("atlas_startup_error.txt")
+        try:
+            error_path.write_text(traceback.format_exc())
+        except Exception:
+            pass
+        raise

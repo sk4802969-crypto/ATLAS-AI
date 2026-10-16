@@ -158,4 +158,15 @@ class AtlasApp(App):
 
 
 if __name__ == "__main__":
-    AtlasApp().run()
+    import traceback
+    from pathlib import Path
+
+    try:
+        AtlasApp().run()
+    except BaseException:
+        error_path = Path("atlas_startup_error.txt")
+        try:
+            error_path.write_text(traceback.format_exc())
+        except Exception:
+            pass
+        raise
