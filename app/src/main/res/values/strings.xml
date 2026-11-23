@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Atlas AI</string>
+    <string name="accessibility_service_label">Atlas AI Screen Hands &amp; Automation</string>
+    <string name="accessibility_service_description">Enables Atlas AI to assist with screen navigation, reading contexts, and executing touch automation with full user privacy.</string>
+</resources>

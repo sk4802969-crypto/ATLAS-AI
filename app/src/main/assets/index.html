@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="hi" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Atlas AI - Autonomous Flagship Assistant</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Top GitHub OTA Banner -->
+  <div id="ota-banner" class="ota-banner">
+    <div class="ota-content">
+      <span class="ota-badge">⚡ UPDATE</span>
+      <span class="ota-text">New Version <strong>v1.2.0</strong> Available on GitHub</span>
+    </div>
+    <button id="btn-ota-install" class="btn-ota" onclick="handleOtaInstall()">INSTALL UPDATE</button>
+  </div>
+
+  <!-- Main Container -->
+  <div class="app-container">
+    <!-- Top Bar -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="orb-icon"></div>
+        <div>
+          <h1 class="logo-title">ATLAS AI</h1>
+          <p class="logo-sub">JARVIS & ULTRON SWARM</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="status-indicator">
+          <span class="status-dot"></span>
+          <span class="status-label">5 AGENTS LIVE</span>
+        </div>
+        <select id="theme-selector" class="theme-select" onchange="changeTheme(this.value)">
+          <option value="dark">Matte Dark</option>
+          <option value="warm">Warm Obsidian</option>
+          <option value="minimal">Neo-Minimal</option>
+        </select>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('tab-chat')">💬 Chat & Voice</button>
+      <button class="tab-btn" onclick="switchTab('tab-map')">🗺️ Swarm Map</button>
+      <button class="tab-btn" onclick="switchTab('tab-trends')">🔥 Social Trends</button>
+      <button class="tab-btn" onclick="switchTab('tab-emails')">✉️ VIP Mail</button>
+      <button class="tab-btn" onclick="switchTab('tab-termux')">💻 Termux Shell</button>
+    </nav>
+
+    <!-- TAB 1: Chat & Voice -->
+    <main id="tab-chat" class="tab-view active">
+      <!-- 3D Floating Dots Canvas Area -->
+      <div class="orb-visualizer-container">
+        <canvas id="dots-canvas" width="360" height="200"></canvas>
+        <div class="voice-status-pill">
+          <span class="pulse-dot"></span>
+          <span id="voice-status-text">LISTENING • 3D SPHERICAL ORB</span>
+        </div>
+        <!-- Voice Persona Switcher -->
+        <div class="voice-selector-bar">
+          <span class="voice-label">VOICE:</span>
+          <button class="voice-btn active" onclick="setVoice('aryan')">Aryan ♂</button>
+          <button class="voice-btn" onclick="setVoice('kabir')">Kabir ♂</button>
+          <button class="voice-btn" onclick="setVoice('meera')">Meera ♀</button>
+          <button class="voice-btn" onclick="setVoice('zoya')">Zoya ♀</button>
+          <button class="voice-btn ultron-btn" onclick="setVoice('ultron')">⚡ Ultron</button>
+        </div>
+      </div>
+
+      <!-- Chat Log Stream -->
+      <div id="chat-stream" class="chat-stream">
+        <!-- Initial Welcome Message -->
+        <div class="chat-bubble atlas-bubble">
+          <div class="bubble-header">
+            <span class="sender-name">ATLAS (COMMANDER)</span>
+            <span class="timestamp">Just now</span>
+          </div>
+          <div class="bubble-content">
+            नमस्ते सुफ़ियान! मैं <strong>Atlas AI</strong> हूँ। आपके पाँचों एजेंट्स (Cypher, Nexus, Sentinel, Ultron) तैयार हैं। आप मुझसे गेम बनाने, Termux कमांड्स चलाने, रील्स के ट्रेंड्स देखने या VIP ईमेल जाँचने के लिए कभी भी कह सकते हैं!
+          </div>
+          <div class="bubble-actions">
+            <button class="act-btn" onclick="playAudio(this, 'नमस्ते सुफ़ियान! मैं एटलस AI हूँ। आपके पांचों एजेंट्स तैयार हैं।')">▶ Play</button>
+            <button class="act-btn" onclick="copyMessage(this)">📄 Copy</button>
+            <button class="act-btn" onclick="shareMessage('नमस्ते सुफ़ियान! Atlas AI तैयार है।')">↗ Share</button>
+          </div>
+        </div>
+
+        <!-- Sample Code Message with Dedicated Copy Button -->
+        <div class="chat-bubble atlas-bubble">
+          <div class="bubble-header">
+            <span class="sender-name">CYPHER & ULTRON</span>
+            <span class="timestamp">Just now</span>
+          </div>
+          <div class="bubble-content">
+            सुफ़ियान, यह रहा आपका ऑटोमेशन कोड। आप सिर्फ कोड कॉपी करके सीधे Termux में रन कर सकते हैं:
+            <!-- Code Block with Dedicated Copy Button -->
+            <div class="code-container">
+              <div class="code-header">
+                <span class="code-lang">BASH / TERMUX SCRIPT</span>
+                <button class="btn-copy-code" onclick="copyCode(this)">📋 COPY CODE</button>
+              </div>
+              <pre class="code-box"><code># Atlas AI Autonomous Termux Bridge
+pkg update -y && pkg install nodejs python
+cd ~/projects/atlas-ai
+node server.js
+echo "Atlas Swarm Live on port 8080"</code></pre>
+            </div>
+          </div>
+          <div class="bubble-actions">
+            <button class="act-btn" onclick="playAudio(this, 'सुफ़ियान, यह रहा आपका ऑटोमेशन कोड। आप सिर्फ कोड कॉपी करके सीधे Termux में रन कर सकते हैं')">▶ Play</button>
+            <button class="act-btn" onclick="copyMessage(this)">📄 Copy Msg</button>
+            <button class="act-btn" onclick="shareMessage('Atlas AI Termux Code')">↗ Share</button>
+          </div>
+        </div>
+
+        <!-- Interactive Playable Game Card -->
+        <div class="chat-bubble atlas-bubble">
+          <div class="bubble-header">
+            <span class="sender-name">CYPHER (GAME ENGINE)</span>
+            <span class="timestamp">Just now</span>
+          </div>
+          <div class="bubble-content">
+            <div class="game-card">
+              <div class="game-info">
+                <div class="game-icon">🕹️</div>
+                <div>
+                  <h4 class="game-title">Cyber Dash 2D (Retro Runner)</h4>
+                  <p class="game-desc">HTML5 Physics Engine • On-Device Playable</p>
+                </div>
+              </div>
+              <div class="game-actions">
+                <button class="btn-play-game" onclick="openGameModal()">▶ PLAY NOW</button>
+                <button class="btn-publish-game" onclick="publishGame()">🚀 PUBLISH / SHARE</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Chat Input Bar -->
+      <div class="chat-input-bar">
+        <button id="mic-btn" class="input-icon-btn mic-btn" onclick="toggleMic()">🎤</button>
+        <input type="text" id="user-input" class="user-text-input" placeholder="Type or speak (e.g. 'game banao', 'termux code', 'trends')..." onkeydown="if(event.key==='Enter')sendMessage()">
+        <button class="input-icon-btn send-btn" onclick="sendMessage()">➤</button>
+      </div>
+    </main>
+
+    <!-- TAB 2: Live Swarm Map -->
+    <section id="tab-map" class="tab-view">
+      <div class="section-card">
+        <div class="section-header">
+          <h3>5-AGENT NEURAL SWARM TOPOLOGY</h3>
+          <span class="badge-active">ONLINE • 100% SYNC</span>
+        </div>
+        <div class="swarm-map-wrapper">
+          <svg id="swarm-svg" viewBox="0 0 400 320" class="swarm-svg">
+            <!-- Connection lines -->
+            <line x1="200" y1="160" x2="80" y2="70" stroke="#4a5568" stroke-width="2" />
+            <line x1="200" y1="160" x2="320" y2="70" stroke="#4a5568" stroke-width="2" />
+            <line x1="200" y1="160" x2="90" y2="250" stroke="#4a5568" stroke-width="2" />
+            <line x1="200" y1="160" x2="310" y2="250" stroke="#4a5568" stroke-width="2" />
+            <line x1="80" y1="70" x2="320" y2="70" stroke="#2d3748" stroke-width="1.5" stroke-dasharray="4" />
+            <line x1="90" y1="250" x2="310" y2="250" stroke="#2d3748" stroke-width="1.5" stroke-dasharray="4" />
+
+            <!-- Center Atlas Node -->
+            <circle cx="200" cy="160" r="28" fill="#1f1b2e" stroke="#c7b9fa" stroke-width="3" />
+            <circle cx="200" cy="160" r="8" fill="#c7b9fa" />
+            <text x="200" y="200" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">ATLAS (CORE)</text>
+
+            <!-- Cypher Node -->
+            <circle cx="80" cy="70" r="22" fill="#142634" stroke="#64c8ff" stroke-width="2.5" />
+            <circle cx="80" cy="70" r="6" fill="#64c8ff" />
+            <text x="80" y="104" text-anchor="middle" fill="#e2e8f0" font-size="11">CYPHER (CODE)</text>
+
+            <!-- Nexus Node -->
+            <circle cx="320" cy="70" r="22" fill="#2d2216" stroke="#ffb464" stroke-width="2.5" />
+            <circle cx="320" cy="70" r="6" fill="#ffb464" />
+            <text x="320" y="104" text-anchor="middle" fill="#e2e8f0" font-size="11">NEXUS (WEB)</text>
+
+            <!-- Sentinel Node -->
+            <circle cx="90" cy="250" r="22" fill="#16291e" stroke="#82f0a0" stroke-width="2.5" />
+            <circle cx="90" cy="250" r="6" fill="#82f0a0" />
+            <text x="90" y="284" text-anchor="middle" fill="#e2e8f0" font-size="11">SENTINEL (QA)</text>
+
+            <!-- Ultron Node -->
+            <circle cx="310" cy="250" r="22" fill="#2d171c" stroke="#ff788c" stroke-width="2.5" />
+            <circle cx="310" cy="250" r="6" fill="#ff788c" />
+            <text x="310" y="284" text-anchor="middle" fill="#e2e8f0" font-size="11">ULTRON (TERMUX)</text>
+          </svg>
+        </div>
+
+        <!-- Agent Activities List -->
+        <div id="agent-cards-container" class="agent-cards-list"></div>
+      </div>
+    </section>
+
+    <!-- TAB 3: Social Trends & Reels -->
+    <section id="tab-trends" class="tab-view">
+      <div class="section-card">
+        <div class="section-header">
+          <h3>NEXUS: LIVE INSTAGRAM & X TREND TRACKER</h3>
+          <button class="btn-refresh" onclick="loadTrends()">🔄 Refresh</button>
+        </div>
+        <p class="section-desc">Nexus autonomously scans worldwide reels, sounds, and viral topics:</p>
+        <div id="trends-list" class="trends-list"></div>
+        <div class="auto-post-box">
+          <h4>🚀 Create Autonomous Reel/Post</h4>
+          <input type="text" id="post-topic" class="user-text-input" placeholder="Topic: e.g. New Coding Tricks in Termux">
+          <button class="btn-primary" onclick="autoGeneratePost()">GENERATE & SCHEDULE POST</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: VIP Email Triage -->
+    <section id="tab-emails" class="tab-view">
+      <div class="section-card">
+        <div class="section-header">
+          <h3>SMART EMAIL PRIORITIZER (VIP TRIAGE)</h3>
+          <span class="badge-urgent">2 PRIORITY EMAILS</span>
+        </div>
+        <p class="section-desc">Spam and promotions filtered out. Only critical actionable emails:</p>
+        <div id="emails-list" class="emails-list"></div>
+      </div>
+    </section>
+
+    <!-- TAB 5: Termux Shell Terminal -->
+    <section id="tab-termux" class="tab-view">
+      <div class="section-card">
+        <div class="section-header">
+          <h3>ULTRON: TERMUX COMMAND CONSOLE</h3>
+          <span class="badge-active">CONNECTED</span>
+        </div>
+        <div id="terminal-screen" class="terminal-screen">
+          <div class="term-line">$ atlas-swarm --status</div>
+          <div class="term-line term-green">[OK] 5 Agents active. Port 8080 open. Node v26.13.1 ready.</div>
+        </div>
+        <div class="term-input-row">
+          <span class="term-prompt">$</span>
+          <input type="text" id="term-cmd-input" class="term-input" placeholder="Type Termux command (e.g. ls -la, uptime, git status)..." onkeydown="if(event.key==='Enter')runTermuxCommand()">
+          <button class="btn-term-run" onclick="runTermuxCommand()">RUN</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- PLAYABLE MINI-GAME MODAL -->
+  <div id="game-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>🕹️ Cyber Dash 2D (Endless Neon Runner)</h3>
+        <button class="btn-close" onclick="closeGameModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <canvas id="game-canvas" width="340" height="200"></canvas>
+        <div class="game-controls">
+          <button id="btn-jump" class="btn-jump" onclick="gameJump()">TAP TO JUMP 🦘</button>
+        </div>
+        <p class="game-hint">Dodge the red obstacles! Press Spacebar or Tap Jump.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

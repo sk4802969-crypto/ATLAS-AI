@@ -1,0 +1,7 @@
+<resources>
+    <color name="bg_dark">#0D0F12</color>
+    <color name="surface_dark">#161920</color>
+    <color name="accent_purple">#C7B9FA</color>
+    <color name="accent_cyan">#64C8FF</color>
+    <color name="white">#FFFFFF</color>
+</resources>
